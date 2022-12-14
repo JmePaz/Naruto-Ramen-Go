@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.lang.Math;
 /**
  *
  * @author James RyzenX
@@ -24,7 +25,7 @@ class Player {
     int posX;
     int posY;
     int frame;
-    float speed;
+    int stepDist;
     
     int gameAction;
     boolean isMoving;
@@ -50,7 +51,7 @@ class Player {
         this.playerIcon =  playerSprites.get(0);
         this.playerImg = this.playerIcon.getImage();
         
-        this.speed = 4.5f;
+        this.stepDist = 7;
         this.isMoving = false;
         this.gameAction = 0;
         parent.addKeyListener(new KeyAdapter() {
@@ -69,20 +70,24 @@ class Player {
     }
     
     public void Update(Graphics graphic){
+        
+        // able to move L and Right
         if(isMoving){
             if(gameAction == KeyEvent.VK_LEFT || gameAction == KeyEvent.VK_A){
-               posX = (posX-15);
+               posX = Math.max(posX-stepDist, 0);
                frame = (frame+1)%4;
                playerImg = playerSprites.get(frame+0).getImage();
                
                 System.out.println("At X: "+ posX);
+               
             }
             else if(gameAction == KeyEvent.VK_RIGHT || gameAction == KeyEvent.VK_D){
-               posX = (posX+15);
+               posX = Math.min(posX+stepDist, parent.canvasWidth-(int)(0.14f*parent.canvasWidth));
                frame = (frame+1)%4;
                playerImg = playerSprites.get(frame+4).getImage();
                
                System.out.println("At X: "+ posX);
+         
             }
         }
         
