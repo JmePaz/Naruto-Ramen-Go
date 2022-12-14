@@ -16,6 +16,8 @@ public class NarutoRamenGameApp {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Hello World");
+        Game game = new Game(400, 600);
+        game.Show();
     }
     
 }
