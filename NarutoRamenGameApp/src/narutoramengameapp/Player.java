@@ -70,14 +70,14 @@ class Player {
     
     public void Update(Graphics graphic){
         if(isMoving){
-            if(gameAction == KeyEvent.VK_LEFT){
+            if(gameAction == KeyEvent.VK_LEFT || gameAction == KeyEvent.VK_A){
                posX = (posX-15);
                frame = (frame+1)%4;
                playerImg = playerSprites.get(frame+0).getImage();
                
                 System.out.println("At X: "+ posX);
             }
-            else if(gameAction == KeyEvent.VK_RIGHT){
+            else if(gameAction == KeyEvent.VK_RIGHT || gameAction == KeyEvent.VK_D){
                posX = (posX+15);
                frame = (frame+1)%4;
                playerImg = playerSprites.get(frame+4).getImage();
