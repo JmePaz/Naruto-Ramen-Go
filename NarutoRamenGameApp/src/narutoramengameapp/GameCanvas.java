@@ -29,7 +29,7 @@ public class GameCanvas extends Canvas{
         canvasWidth = width;
         
         //initialize Game Objects
-        player = new Player(this,canvasWidth/2, canvasHeight-100);
+        player = new Player(this, canvasWidth/2, canvasHeight-100);
         
         //initialize a looping stage
         timer = new Timer(true);
