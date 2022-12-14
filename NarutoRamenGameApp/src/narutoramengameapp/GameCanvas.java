@@ -6,6 +6,8 @@ package narutoramengameapp;
 
 
 import java.awt.*;
+import java.util.TimerTask;
+import java.util.Timer;
 import javax.swing.*;
 
 /**
@@ -13,20 +15,43 @@ import javax.swing.*;
  * @author James RyzenX
  */
 public class GameCanvas extends Canvas{
-    Image naruto;
-    ImageIcon narutoIcon;
-    public GameCanvas(){
+
+    int canvasHeight;
+    int canvasWidth;
+    Timer timer;
+    TimerTask task;
+    
+    Player player;
+    
+    public GameCanvas(int width, int height){
+        //initalize canvasHeight
+        canvasHeight = height;
+        canvasWidth = width;
         
+        //initialize Game Objects
+        player = new Player(this,0, canvasHeight-100);
+        
+        //initialize a looping stage
+        timer = new Timer(true);
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                repaint();
+
+            }//end run
+        };//end task 
+        
+        timer.schedule(task, 500, 100);
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-        narutoIcon = new ImageIcon("Assets//Naruto//L1.png");
-        naruto = narutoIcon.getImage();
-        
-        g.drawImage(naruto, 100, 40, this);
+       
+        //update Game Objects
+        player.Update(g);
     }
+    
     
     
     

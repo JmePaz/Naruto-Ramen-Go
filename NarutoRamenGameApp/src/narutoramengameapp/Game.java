@@ -21,8 +21,9 @@ public class Game  extends JFrame{
         Pane.setLayout(null);
         
         //set up game canvas
-        gameCanvas = new GameCanvas();
+        gameCanvas = new GameCanvas(width, height);
         gameCanvas.setBounds(0, 0, width, height);
+        Pane.add(gameCanvas);
         
         //set window Event
         WindowEvents();
