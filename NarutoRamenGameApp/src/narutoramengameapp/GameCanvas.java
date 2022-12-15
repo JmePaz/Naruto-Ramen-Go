@@ -55,7 +55,10 @@ public class GameCanvas extends Canvas{
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
        
         //update Game Objects
+        //player update
         player.Update(g);
+        
+        //item update
         for(int i=0; i<items.size(); i++){
             GameObject item = items.get(i);
             item.Update(g);
