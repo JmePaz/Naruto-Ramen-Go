@@ -15,7 +15,7 @@ import java.lang.Math;
  *
  * @author James RyzenX
  */
-class Player {
+class Player extends GameObject{
     GameCanvas parent;
     Image playerImg;
     ImageIcon playerIcon;
@@ -33,7 +33,7 @@ class Player {
     
     public Player(GameCanvas parent){
         this.parent = parent;
-        this.__Init();
+        this.__Init__();
         
         
     }
@@ -42,11 +42,11 @@ class Player {
         this.parent = parent;
         this.posX = X;
         this.posY = Y;
-        this.__Init();
+        this.__Init__();
     }  
     
-    
-    private void __Init(){
+    @Override
+    protected void __Init__(){
         this.SetUpSprites();
         this.playerIcon =  playerSprites.get(0);
         this.playerImg = this.playerIcon.getImage();
@@ -69,6 +69,7 @@ class Player {
         });
     }
     
+    @Override
     public void Update(Graphics graphic){
         
         // able to move L and Right

@@ -21,7 +21,7 @@ public class GameCanvas extends Canvas{
     Timer timer;
     TimerTask task;
     
-    Player player;
+    GameObject player;
     
     public GameCanvas(int width, int height){
         //initalize canvasHeight

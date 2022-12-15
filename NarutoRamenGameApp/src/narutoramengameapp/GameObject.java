@@ -4,10 +4,13 @@
  */
 package narutoramengameapp;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author James RyzenX
  */
-public class GameObject {
-    
+abstract class GameObject {
+    protected abstract void __Init__();
+    public abstract void Update(Graphics graphic);
 }
