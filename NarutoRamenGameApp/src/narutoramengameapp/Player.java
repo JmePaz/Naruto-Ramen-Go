@@ -15,16 +15,13 @@ import java.lang.Math;
  *
  * @author James RyzenX
  */
-class Player {
-    GameCanvas parent;
+class Player extends GameObject{
     Image playerImg;
     ImageIcon playerIcon;
     ArrayList<ImageIcon>playerSprites;
     String[] directions = {"L", "R"};
-    
-    int posX;
-    int posY;
-    int frame;
+
+    int frameSprite;
     int stepDist;
     
     int gameAction;
@@ -32,21 +29,19 @@ class Player {
     
     
     public Player(GameCanvas parent){
-        this.parent = parent;
-        this.__Init();
+        super(parent);
+        this.__Init__();
         
         
     }
     
     public Player(GameCanvas parent, int X, int Y){
-        this.parent = parent;
-        this.posX = X;
-        this.posY = Y;
-        this.__Init();
+        super(parent, X, Y);
+        this.__Init__();
     }  
     
-    
-    private void __Init(){
+    @Override
+    protected void __Init__(){
         this.SetUpSprites();
         this.playerIcon =  playerSprites.get(0);
         this.playerImg = this.playerIcon.getImage();
@@ -69,25 +64,22 @@ class Player {
         });
     }
     
+    @Override
     public void Update(Graphics graphic){
         
         // able to move L and Right
         if(isMoving){
             if(gameAction == KeyEvent.VK_LEFT || gameAction == KeyEvent.VK_A){
                posX = Math.max(posX-stepDist, 0);
-               frame = (frame+1)%4;
-               playerImg = playerSprites.get(frame+0).getImage();
-               
-                System.out.println("At X: "+ posX);
+               frameSprite = (frameSprite+1)%4;
+               playerImg = playerSprites.get(frameSprite+0).getImage();
                
             }
             else if(gameAction == KeyEvent.VK_RIGHT || gameAction == KeyEvent.VK_D){
                posX = Math.min(posX+stepDist, parent.canvasWidth-(int)(0.14f*parent.canvasWidth));
-               frame = (frame+1)%4;
-               playerImg = playerSprites.get(frame+4).getImage();
+               frameSprite = (frameSprite+1)%4;
+               playerImg = playerSprites.get(frameSprite+4).getImage();
                
-               System.out.println("At X: "+ posX);
-         
             }
         }
         
