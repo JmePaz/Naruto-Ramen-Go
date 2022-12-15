@@ -31,6 +31,7 @@ public class GameCanvas extends Canvas{
         //initalize canvasHeight
         canvasHeight = height;
         canvasWidth = width;
+        setBackground(Color.darkGray);
         
         //initialize Game Objects
         itemGen = new ItemGenerator(20);
