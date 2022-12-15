@@ -9,6 +9,8 @@ import java.awt.*;
 import java.util.TimerTask;
 import java.util.Timer;
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -22,7 +24,8 @@ public class GameCanvas extends Canvas{
     TimerTask task;
     
     GameObject player;
-    GameObject item;
+    List<GameObject> items;
+    ItemGenerator itemGen;
     
     public GameCanvas(int width, int height){
         //initalize canvasHeight
@@ -30,8 +33,9 @@ public class GameCanvas extends Canvas{
         canvasWidth = width;
         
         //initialize Game Objects
+        itemGen = new ItemGenerator(20);
         player = new Player(this, canvasWidth/2, canvasHeight-100);
-        item =  new Item(this, new ImageIcon("src//Assets//TempItems//kunai.png"),"Obstacle",canvasWidth/2, 0);
+        items =  itemGen.GenerateItems(this);
         
         //initialize a looping stage
         timer = new Timer(true);
@@ -52,7 +56,15 @@ public class GameCanvas extends Canvas{
        
         //update Game Objects
         player.Update(g);
-        item.Update(g);
+        for(int i=0; i<items.size(); i++){
+            GameObject item = items.get(i);
+            item.Update(g);
+            if(item.isDestoryed){
+                //replace that item
+                items.set(i, itemGen.GenerateSingleItem(this));
+            }
+          
+        }
     }
     
     

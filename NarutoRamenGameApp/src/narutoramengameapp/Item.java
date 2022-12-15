@@ -13,17 +13,14 @@ import javax.swing.ImageIcon;
  * @author James RyzenX
  */
 public class Item extends GameObject{
-    GameCanvas parent;
     ImageIcon itemIcon;
     Image itemImg;
     String tag;
     
-    int posX;
-    int posY;
-    
     int stepDist;
     
     public Item(GameCanvas parent, ImageIcon itemIcon, String tag){
+        super(parent);
         this.parent = parent;
         this.itemIcon = itemIcon;
         this.tag = tag;        
@@ -31,11 +28,9 @@ public class Item extends GameObject{
     }
     
      public Item(GameCanvas parent, ImageIcon itemIcon, String tag, int posX, int posY){
-        this.parent = parent;
+        super(parent, posX, posY);
         this.itemIcon = itemIcon;
         this.tag = tag;
-        this.posX = posX;
-        this.posY = posY;
         this.__Init__();
     }
     
@@ -48,9 +43,14 @@ public class Item extends GameObject{
 
     @Override
     public void Update(Graphics graphic) {
-        if(posY>=0){
+        if(posY<=parent.canvasHeight){
             posY += stepDist;
             graphic.drawImage(itemImg, posX, posY, null);
+        }
+        else{
+            //remove this
+            //parent.itemGen.removeAndRegen(parent, this);
+            this.isDestoryed = true;
         }
     }
    

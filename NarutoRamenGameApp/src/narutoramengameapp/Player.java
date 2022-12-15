@@ -16,14 +16,11 @@ import java.lang.Math;
  * @author James RyzenX
  */
 class Player extends GameObject{
-    GameCanvas parent;
     Image playerImg;
     ImageIcon playerIcon;
     ArrayList<ImageIcon>playerSprites;
     String[] directions = {"L", "R"};
-    
-    int posX;
-    int posY;
+
     int frameSprite;
     int stepDist;
     
@@ -32,16 +29,14 @@ class Player extends GameObject{
     
     
     public Player(GameCanvas parent){
-        this.parent = parent;
+        super(parent);
         this.__Init__();
         
         
     }
     
     public Player(GameCanvas parent, int X, int Y){
-        this.parent = parent;
-        this.posX = X;
-        this.posY = Y;
+        super(parent, X, Y);
         this.__Init__();
     }  
     
