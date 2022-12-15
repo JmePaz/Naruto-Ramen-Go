@@ -22,6 +22,7 @@ public class GameCanvas extends Canvas{
     TimerTask task;
     
     GameObject player;
+    GameObject item;
     
     public GameCanvas(int width, int height){
         //initalize canvasHeight
@@ -30,6 +31,7 @@ public class GameCanvas extends Canvas{
         
         //initialize Game Objects
         player = new Player(this, canvasWidth/2, canvasHeight-100);
+        item =  new Item(this, new ImageIcon("src//Assets//TempItems//kunai.png"),"Obstacle",canvasWidth/2, 0);
         
         //initialize a looping stage
         timer = new Timer(true);
@@ -50,6 +52,7 @@ public class GameCanvas extends Canvas{
        
         //update Game Objects
         player.Update(g);
+        item.Update(g);
     }
     
     

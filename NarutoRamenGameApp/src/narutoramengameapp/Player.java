@@ -24,7 +24,7 @@ class Player extends GameObject{
     
     int posX;
     int posY;
-    int frame;
+    int frameSprite;
     int stepDist;
     
     int gameAction;
@@ -76,19 +76,15 @@ class Player extends GameObject{
         if(isMoving){
             if(gameAction == KeyEvent.VK_LEFT || gameAction == KeyEvent.VK_A){
                posX = Math.max(posX-stepDist, 0);
-               frame = (frame+1)%4;
-               playerImg = playerSprites.get(frame+0).getImage();
-               
-                System.out.println("At X: "+ posX);
+               frameSprite = (frameSprite+1)%4;
+               playerImg = playerSprites.get(frameSprite+0).getImage();
                
             }
             else if(gameAction == KeyEvent.VK_RIGHT || gameAction == KeyEvent.VK_D){
                posX = Math.min(posX+stepDist, parent.canvasWidth-(int)(0.14f*parent.canvasWidth));
-               frame = (frame+1)%4;
-               playerImg = playerSprites.get(frame+4).getImage();
+               frameSprite = (frameSprite+1)%4;
+               playerImg = playerSprites.get(frameSprite+4).getImage();
                
-               System.out.println("At X: "+ posX);
-         
             }
         }
         
