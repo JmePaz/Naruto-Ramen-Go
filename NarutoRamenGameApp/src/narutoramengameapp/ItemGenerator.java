@@ -17,28 +17,39 @@ import javax.swing.ImageIcon;
 public class ItemGenerator {
     Random random;
     int Nlimit;
+    String[]itemProps;
     List<GameObject> items;
     GameObject lastItem;
     
     public ItemGenerator(int Nlimit){
         this.Nlimit = Nlimit;
         random = new Random();
+        itemProps = new String[] {"candy", "egg", "maki", "pork"};
     }
     
     public List<GameObject> GenerateItems(GameCanvas parent){
         items = new ArrayList<>();
-        ImageIcon kunai = new ImageIcon("src//Assets//TempItems//kunai.png");
         int randY = 0;
         for(int i=0; i<Nlimit; i++){
+            String selectedItem = SelectItem();
+            ImageIcon selectedItemIcon = new ImageIcon("src//Assets//Items//"+selectedItem+".png");
+            
             int randX = random.nextInt(parent.canvasWidth-(int)(parent.canvasWidth*0.14));
             randY -= random.nextInt(50) + 70;
-            GameObject item = new Item(parent,kunai, "Obstacle", randX, randY );
+            GameObject item = new Item(parent,selectedItemIcon, selectedItem, randX, randY );
             lastItem = item;
             items.add(item);
         }
         return items;
     }
-    
+    private String SelectItem(){
+        int randNum = random.nextInt(9) + 1;
+        if(randNum<=6){
+            return "kunai";
+        }
+        
+        return itemProps[randNum%4];
+    }
     
     //remove an index and generate another object
     public GameObject GenerateSingleItem(GameCanvas parent){
@@ -53,8 +64,9 @@ public class ItemGenerator {
               randY = -randY;
           }
           //generating item
-          ImageIcon kunai = new ImageIcon("src//Assets//TempItems//kunai.png");
-          GameObject item = new Item(parent,kunai, "Obstacle", randX, randY );
+          String selectedItem =  SelectItem();
+          ImageIcon selectedItemIcon = new ImageIcon("src//Assets//Items//"+selectedItem+".png");
+          GameObject item = new Item(parent,selectedItemIcon, selectedItem, randX, randY );
           lastItem = item;
           //returning item
           return item;
