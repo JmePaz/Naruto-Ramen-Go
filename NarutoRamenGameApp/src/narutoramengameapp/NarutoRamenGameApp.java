@@ -15,10 +15,8 @@ public class NarutoRamenGameApp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-<<<<<<< Updated upstream
         System.out.println("Hello World");
-=======
->>>>>>> Stashed changes
+
         Game game = new Game(400, 550);
         game.Show();
     }
