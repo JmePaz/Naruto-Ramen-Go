@@ -29,8 +29,8 @@ class Player extends GameObject{
     int gameAction;
     boolean isMoving;
     
-    int lives;
-    int score;
+    private int lives;
+    private int score;
     
     public Player(GameCanvas parent){
         super(parent);
@@ -123,7 +123,7 @@ class Player extends GameObject{
             //destroy item once collision occurs
             item.OnDestroy(true);
             
-            if (lives<=0){
+            if (getLives()<=0){
               lives=0;
               System.out.println("RIP");
             }
@@ -148,7 +148,22 @@ class Player extends GameObject{
                 }
             }
             //for testing
-            System.out.println(item.tag+": "+score);
+            System.out.println(item.tag+": "+getScore());
         }
     }
+    
+    /**
+     * @return the lives
+     */
+    public int getLives() {
+        return lives;
+    }
+
+    /**
+     * @return the score
+     */
+    public int getScore() {
+        return score;
+    }
+
 }

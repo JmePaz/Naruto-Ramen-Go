@@ -60,7 +60,7 @@ public class GameCanvas extends Canvas{
     public void paint(Graphics g) {
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         
-        if(player.lives<=0){
+        if(player.getLives()<=0){
             InitatiateGameOver(g);
             return;
         }
@@ -105,10 +105,10 @@ public class GameCanvas extends Canvas{
         
         g.setColor(Color.white);
         g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Lives: "+player.lives, 10, getHeight()/25);
+        g.drawString("Lives: "+player.getLives(), 10, getHeight()/25);
 
         g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Score: "+player.score, getWidth()- 100 + 10, getHeight()/25);
+        g.drawString("Score: "+player.getScore(), getWidth() - 100 - 40, getHeight()/25);
     
     }
     
