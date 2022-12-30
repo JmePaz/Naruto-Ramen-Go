@@ -65,15 +65,9 @@ public class GameCanvas extends Canvas{
             return;
         }
 
-        // UI
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Lives: "+player.lives, getWidth()/25, getHeight()/25);
-
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Score: "+player.score, getWidth()-150, getHeight()/25);
 
         //update Game Objects//
-
+        
         //player update  
         player.Update(g);
         //item update
@@ -88,7 +82,10 @@ public class GameCanvas extends Canvas{
             //player on collision with the item
             player.Collide(item);
             FlushItem(item, i);
-         }       
+        }       
+        
+        //update UI
+        UIindicator(g);
     }
     
     // destroy flushed items
@@ -99,6 +96,22 @@ public class GameCanvas extends Canvas{
 
         }
     }
+    
+    
+    // ui for score and lives
+    private void UIindicator(Graphics g){
+        g.setColor(Color.darkGray);
+        g.fillRect(0, 0,this.getWidth(), 30);
+        
+        g.setColor(Color.white);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Lives: "+player.lives, 10, getHeight()/25);
+
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Score: "+player.score, getWidth()- 100 + 10, getHeight()/25);
+    
+    }
+    
     
     private void InitatiateGameOver(Graphics g){
            //background
