@@ -4,8 +4,10 @@
  */
 package narutoramengameapp;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 /**
@@ -18,6 +20,10 @@ public class Item extends GameObject{
     String tag;
     
     int stepDist;
+    //added rectangle for collision detection
+    Rectangle rectI;
+    
+   
     
     public Item(GameCanvas parent, ImageIcon itemIcon, String tag){
         super(parent);
@@ -39,13 +45,17 @@ public class Item extends GameObject{
     protected void __Init__() {
         this.stepDist = 9;
         this.itemImg = itemIcon.getImage();
+        //added rectangle for collision detection
+        //placed here so it can be used outside
+        this.rectI=new Rectangle (posX, posY, itemImg.getWidth(parent),itemImg.getHeight(parent));
     }
 
     @Override
     public void Update(Graphics graphic) {
         if(posY<=parent.canvasHeight){
             posY += stepDist;
-            graphic.drawImage(itemImg, posX, posY, null);
+            graphic.drawImage(itemImg, posX, posY, parent);
+                
         }
         else{
             //remove this
@@ -53,5 +63,7 @@ public class Item extends GameObject{
             this.isDestoryed = true;
         }
     }
+
+    
    
 }
