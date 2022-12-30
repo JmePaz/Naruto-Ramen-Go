@@ -62,10 +62,7 @@ public class GameCanvas extends Canvas{
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         
         if(player.getLives()<=0){
-            Container parent = this.getParent();
-            parent.removeAll();
-            GameOverScene gameOverScene = new GameOverScene(player.getScore(), this.canvasWidth, this.canvasHeight);
-            parent.add(gameOverScene);
+            InitatiateGameOver(g);
             return;
         }
 
@@ -120,15 +117,15 @@ public class GameCanvas extends Canvas{
     
     
     private void InitatiateGameOver(Graphics g){
-           //background
-           Rectangle rectGO=new Rectangle(0,0,getWidth(),getHeight());
-           g.setColor(Color.black);
-           g.fillRect(rectGO.x, rectGO.y, rectGO.width, rectGO.height);
-           
-           //game over message
-           g.setFont(new Font("Arial", Font.BOLD,48));
-           g.setColor(Color.red);
-           g.drawString("GAME OVER", getWidth()/10+5, getHeight()/2);
+            //back to orig state
+            Item.stepDist = 9;
+            ItemGenerator.randYLimit = 70;
+            
+            // go to game over
+            Container parent = this.getParent();
+            parent.removeAll();
+            GameOverScene gameOverScene = new GameOverScene(player.getScore(), this.canvasWidth, this.canvasHeight);
+            parent.add(gameOverScene);
     }
     
     //add difficulty on the Game 
