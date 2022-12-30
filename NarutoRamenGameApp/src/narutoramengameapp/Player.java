@@ -18,8 +18,7 @@ import  java.util.List;
  * @author James RyzenX
  */
 class Player extends GameObject{
-    Image playerImg;
-    ImageIcon playerIcon;
+
     ArrayList<ImageIcon>playerSprites;
     String[] directions = {"L", "R"};
     List<GameObject> items;
@@ -48,8 +47,8 @@ class Player extends GameObject{
     @Override
     protected void __Init__(){
         this.SetUpSprites();
-        this.playerIcon =  playerSprites.get(0);
-        this.playerImg = this.playerIcon.getImage();
+        this.icon =  playerSprites.get(0);
+        this.img = this.icon.getImage();
         
         this.lives = 3;
         this.stepDist = 7;
@@ -77,17 +76,17 @@ class Player extends GameObject{
             if(gameAction == KeyEvent.VK_LEFT || gameAction == KeyEvent.VK_A){
                posX = Math.max(posX-stepDist, 0);
                frameSprite = (frameSprite+1)%4;
-               playerImg = playerSprites.get(frameSprite+0).getImage();
+               this.img = playerSprites.get(frameSprite+0).getImage();
                
             }
             else if(gameAction == KeyEvent.VK_RIGHT || gameAction == KeyEvent.VK_D){
                posX = Math.min(posX+stepDist, parent.canvasWidth-(int)(0.14f*parent.canvasWidth));
                frameSprite = (frameSprite+1)%4;
-               playerImg = playerSprites.get(frameSprite+4).getImage();
+               this.img = playerSprites.get(frameSprite+4).getImage();
                
             }
         }
-        graphic.drawImage(GetPlayerImg(), posX, posY, parent);
+        graphic.drawImage(this.img, posX, posY, parent);
     }
     
     private void SetUpSprites(){
@@ -101,9 +100,6 @@ class Player extends GameObject{
     
     }
     
-    public Image GetPlayerImg(){
-        return playerImg;
-    }
 
     @Override
     public void OnDestroy(boolean isDestroyed) {
@@ -118,10 +114,10 @@ class Player extends GameObject{
         //rectangles to detect collision
         
         //rectangle for player
-        Rectangle rectP=new Rectangle(this.posX,this.posY, this.playerImg.getHeight(null),this.playerImg.getHeight(null));
+        Rectangle rectP=new Rectangle(this.posX,this.posY, this.img.getHeight(null),this.img.getHeight(null));
        
         //rectangle for items
-        Rectangle rectI=new Rectangle(item.posX, item.posY,item.itemImg.getWidth(null), item.itemImg.getHeight(null));
+        Rectangle rectI=new Rectangle(item.posX, item.posY,item.img.getWidth(null), item.img.getHeight(null));
        
         if (rectP.intersects(rectI)){ 
             //destroy item once collision occurs

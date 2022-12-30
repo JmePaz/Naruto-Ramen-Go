@@ -29,9 +29,6 @@ public class GameCanvas extends Canvas{
     List<Item> items;
     ItemGenerator itemGen;
     
-    ImageIcon itemIcon;
-    Item itemGame;
-    
     
     public GameCanvas(int width, int height){
         //initalize canvasHeight

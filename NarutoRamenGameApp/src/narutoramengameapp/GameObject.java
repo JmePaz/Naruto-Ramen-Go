@@ -5,12 +5,16 @@
 package narutoramengameapp;
 
 import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author James RyzenX
  */
 abstract class GameObject {
+    public Image img;
+    public ImageIcon icon;
     public GameCanvas parent;
     public int posX;
     public int posY;
