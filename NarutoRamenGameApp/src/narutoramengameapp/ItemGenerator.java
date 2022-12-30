@@ -50,22 +50,12 @@ public class ItemGenerator {
     }
     
     public String SelectItem(){
-        int randNum = random.nextInt(100) + 1;
-        System.out.println("RandNum is "+ randNum);
-        if(randNum<=60){
+        int randNum = random.nextInt(9) + 1;
+        if(randNum<=6){
             return "kunai";
         }
-        else if(61<=randNum && randNum<=80){
-            return "egg";
-        }
-        else if(81<=randNum && randNum<=95){
-            return "pork";
-        }
-        else if(96<=randNum && randNum<=100){
-            return "maki";
-        }
         
-        return "kunai";
+        return itemProps[randNum%3];
     }
     
     public ImageIcon imgIcon(String selectedItem){
