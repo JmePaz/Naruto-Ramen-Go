@@ -11,6 +11,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.lang.Math;
+import  java.util.List;
+
 /**
  *
  * @author James RyzenX
@@ -20,13 +22,13 @@ class Player extends GameObject{
     ImageIcon playerIcon;
     ArrayList<ImageIcon>playerSprites;
     String[] directions = {"L", "R"};
+    List<GameObject> items;
 
     int frameSprite;
     int stepDist;
     
     int gameAction;
     boolean isMoving;
-    
     
     public Player(GameCanvas parent){
         super(parent);
@@ -66,7 +68,6 @@ class Player extends GameObject{
     
     @Override
     public void Update(Graphics graphic){
-        
         // able to move L and Right
         if(isMoving){
             if(gameAction == KeyEvent.VK_LEFT || gameAction == KeyEvent.VK_A){
@@ -82,13 +83,7 @@ class Player extends GameObject{
                
             }
         }
-        
-        graphic.drawImage(playerImg, posX, posY, null);
-        
-    }
-    
-    public void CollideWith(){
-        
+        graphic.drawImage(GetPlayerImg(), posX, posY, parent);
     }
     
     private void SetUpSprites(){
