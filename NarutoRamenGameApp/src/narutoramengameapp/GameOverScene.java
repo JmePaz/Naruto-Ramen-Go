@@ -22,6 +22,8 @@ import javax.swing.JPanel;
  */
 public class GameOverScene extends JPanel{
     
+   JButton homeBtn;
+
     private int playerScore;
 
     public GameOverScene(int playerScore, int width, int height){
@@ -51,20 +53,13 @@ public class GameOverScene extends JPanel{
         
         JButton replayBtn = new JButton("Play Again");
         replayBtn.setBounds(getWidth()/3, getHeight()/3, 100, 30);
-        replayBtn.setAlignmentX(CENTER_ALIGNMENT);
-        replayBtn.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-              GoToGame();
-            }
-            
-        });
+        replayBtn.addActionListener(e->goToGame());
         
         this.add(replayBtn);
         
-        JButton homeBtn = new JButton("Go Home");
+        homeBtn = new JButton("Go Home");
         homeBtn.setBounds(getWidth()/3, getHeight()/3+replayBtn.getHeight()+20, 100, 30);
-        homeBtn.setAlignmentX(CENTER_ALIGNMENT);
+        homeBtn.addActionListener(e->goToIntro());
         this.add(homeBtn);
     }
 
@@ -72,10 +67,21 @@ public class GameOverScene extends JPanel{
         this.add(Box.createRigidArea(new Dimension(0, spaceY)));
     }
     
-    private void GoToGame(){
+    private void goToGame(){
+        this.setVisible(false);
         Container parent = this.getParent();
         parent.remove(0);
         parent.add(new GameCanvas(getWidth(), getHeight()));
+        parent.revalidate();
+    }
+    
+    private void goToIntro(){
+        Container parent = this.getParent();
+        parent.remove(0);
+        homeBtn.revalidate();
+        parent.add(new IntroScene(getWidth(), getHeight()));
+        parent.revalidate();
+     
     }
     
 }
