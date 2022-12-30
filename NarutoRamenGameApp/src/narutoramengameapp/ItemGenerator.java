@@ -20,6 +20,7 @@ public class ItemGenerator {
     String[]itemProps;
     List<Item> items;
     GameObject lastItem;
+    static int randYLimit = 70;
     
     String colItem;//tentative; to detect intersected item
     ImageIcon selectedItemIcon;
@@ -39,7 +40,7 @@ public class ItemGenerator {
             selectedItemIcon = imgIcon(selectedItem);
             
             randX = random.nextInt(parent.canvasWidth-(int)(parent.canvasWidth*0.14));
-            randY -= random.nextInt(50) + 70;
+            randY -= random.nextInt(50) + ItemGenerator.randYLimit;
             Item item = new Item(parent,selectedItemIcon, selectedItem, randX, randY );
             lastItem = item;
             colItem=selectedItem;//tentative; to detect intersected item
@@ -67,7 +68,7 @@ public class ItemGenerator {
           //generate items
           //initializing positions
           randX = random.nextInt(parent.canvasWidth-(int)(parent.canvasWidth*0.14));
-          randY = random.nextInt(50) + 70;
+          randY = random.nextInt(50) + ItemGenerator.randYLimit;
           if(lastItem != null && !lastItem.isDestoryed){
               randY = lastItem.posY - randY;
           }

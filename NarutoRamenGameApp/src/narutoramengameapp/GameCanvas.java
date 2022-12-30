@@ -82,10 +82,13 @@ public class GameCanvas extends Canvas{
             //player on collision with the item
             player.Collide(item);
             FlushItem(item, i);
+            UpdatePace();
         }       
         
         //update UI
         UIindicator(g);
+        
+        
     }
     
     // destroy flushed items
@@ -96,7 +99,6 @@ public class GameCanvas extends Canvas{
 
         }
     }
-    
     
     // ui for score and lives
     private void UIindicator(Graphics g){
@@ -125,4 +127,22 @@ public class GameCanvas extends Canvas{
            g.drawString("GAME OVER", getWidth()/10+5, getHeight()/2);
     }
     
+    //add difficulty on the Game 
+    // add item step dist every score gap
+    static int SCORE_GAP = 50;
+    int score_limit = 50;
+    private void UpdatePace(){
+        if(player.getScore()>score_limit){
+            System.out.println("Change pace at score: "+player.getScore());
+            //for item speed
+            Item.stepDist += 2;
+            // for item gap
+            ItemGenerator.randYLimit = Math.min(15, ItemGenerator.randYLimit-5);
+            
+            //score limit update (for next counter)
+            score_limit += SCORE_GAP;
+        }
+        
+        
+    }
 }

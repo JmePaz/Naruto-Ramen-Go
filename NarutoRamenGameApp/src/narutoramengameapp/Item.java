@@ -18,7 +18,7 @@ public class Item extends GameObject{
 
     String tag;
     
-    int stepDist;
+    static int stepDist;
     //added rectangle for collision detection
     Rectangle rectI;
     
