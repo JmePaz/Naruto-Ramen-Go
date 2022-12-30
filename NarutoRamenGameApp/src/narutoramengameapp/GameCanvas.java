@@ -120,6 +120,7 @@ public class GameCanvas extends Canvas{
             //back to orig state
             Item.stepDist = 9;
             ItemGenerator.randYLimit = 70;
+            this.score_limit = 50;
             
             // go to game over
             Container parent = this.getParent();
