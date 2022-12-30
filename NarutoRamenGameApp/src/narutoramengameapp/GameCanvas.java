@@ -34,6 +34,7 @@ public class GameCanvas extends Canvas{
         //initalize canvasHeight
         canvasHeight = height;
         canvasWidth = width;
+        setBounds(0, 0, width, height);
         setBackground(Color.CYAN);
         
         //initialize Game Objects
@@ -61,7 +62,10 @@ public class GameCanvas extends Canvas{
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         
         if(player.getLives()<=0){
-            InitatiateGameOver(g);
+            Container parent = this.getParent();
+            parent.removeAll();
+            GameOverScene gameOverScene = new GameOverScene(player.getScore(), this.canvasWidth, this.canvasHeight);
+            parent.add(gameOverScene);
             return;
         }
 
