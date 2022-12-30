@@ -137,7 +137,7 @@ public class GameCanvas extends Canvas{
             //for item speed
             Item.stepDist += 2;
             // for item gap
-            ItemGenerator.randYLimit = Math.min(15, ItemGenerator.randYLimit-5);
+            ItemGenerator.randYLimit = Math.min(15, ItemGenerator.randYLimit-8);
             
             //score limit update (for next counter)
             score_limit += SCORE_GAP;
