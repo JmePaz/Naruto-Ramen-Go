@@ -26,7 +26,7 @@ public class GameCanvas extends Canvas{
     public int virtualY = 40;
     
     Player player;
-    List<GameObject> items;
+    List<Item> items;
     ItemGenerator itemGen;
     
     ImageIcon itemIcon;
@@ -66,64 +66,69 @@ public class GameCanvas extends Canvas{
     public void paint(Graphics g) {
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         
-        //display this once game over
-        if (lives<=0){
-           
+        if(lives<=0){
+            InitatiateGameOver(g);
+            return;
+        }
+
+        // UI
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Lives: "+lives, getWidth()/25, getHeight()/25);
+
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Score: "+score, getWidth()-150, getHeight()/25);
+
+        //update Game Objects//
+
+        //player update  
+        player.Update(g);
+        //item update
+        for(int i=0; i<items.size(); i++){
+            Item item = items.get(i);
+            //get icon and tag/name of respective item
+            String tag =  item.GetTag();
+
+            item.Update(g);
+            if(item.isDestoryed){
+                //replace that item
+                items.set(i, itemGen.GenerateSingleItem(this));
+                //itemGame = new Item(this,itemIcon,tag,item.posX,item.posY);
+                
+            }
+
+            //parameters to read item's current position
+            Collide(g, item);
+         }       
+    }
+    
+    private void InitatiateGameOver(Graphics g){
            //background
            Rectangle rectGO=new Rectangle(0,0,getWidth(),getHeight());
-           g.setColor(Color.red);
+           g.setColor(Color.black);
            g.fillRect(rectGO.x, rectGO.y, rectGO.width, rectGO.height);
            
            //game over message
            g.setFont(new Font("Arial", Font.BOLD,48));
+           g.setColor(Color.red);
            g.drawString("GAME OVER", getWidth()/10+5, getHeight()/2);
-        }
-        else{
-            g.setFont(new Font("Arial", Font.BOLD, 16));
-            g.drawString("Lives: "+lives, getWidth()/25, getHeight()/25);
-
-            g.setFont(new Font("Arial", Font.BOLD, 16));
-            g.drawString("Score: "+score, getWidth()-150, getHeight()/25);
-            
-            //update Game Objects//
-            
-            //player update  
-            player.Update(g);
-            //item update
-            for(int i=0; i<items.size(); i++){
-                GameObject item = items.get(i);
-
-                //get icon and tag/name of respective item
-                itemIcon=itemGen.selectedItemIcon;
-                String tag=itemGen.colItem;
-
-                item.Update(g);
-                if(item.isDestoryed){
-                    //replace that item
-                    items.set(i, itemGen.GenerateSingleItem(this));
-                    itemGame = new Item(this,itemIcon,tag,item.posX,item.posY);
-                }
-
-                //parameters to read item's current position
-                Collide(g,item.posX,item.posY,itemIcon.getImage(),tag);
-            }
-        }
     }
     
-    public void Collide(Graphics g,int x, int y, Image img, String tag)    {  
-        
+    public void Collide(Graphics g, Item item)    { 
+        //if item is already destroyed, then dont collide check
+        if(item.isDestoryed){
+            return;
+        }
         //rectangles to detect collision
         
         //rectangle for player
         Rectangle rectP=new Rectangle(player.posX,player.posY,player.playerImg.getWidth(this),player.playerImg.getHeight(this));
        
         //rectangle for items
-        Rectangle rectI=new Rectangle(x,y,img.getWidth(this),img.getHeight(this));
+        Rectangle rectI=new Rectangle(item.posX, item.posY,item.itemImg.getWidth(this), item.itemImg.getHeight(this));
        
         if (rectP.intersects(rectI)){ 
             //destroy item once collision occurs
-            items=null;
-            items =  itemGen.GenerateItems(this);
+            item.OnDestroy(true);
             
             if (lives<=0){
               lives=0;
@@ -132,17 +137,14 @@ public class GameCanvas extends Canvas{
             else{
                 //scores vary depending on item
                 //except in kunai, where player will lose 1 life
-                switch(tag){
+                switch(item.tag){
                     case "egg" -> {
-                        lives-=0;
                         score+=5;
                     }
                     case "pork" -> {
-                        lives-=0;
                         score+=10;
                     }
                     case "maki" -> {
-                        lives-=0;
                         score+=15;
                     }
                     case "kunai" -> {
@@ -153,7 +155,7 @@ public class GameCanvas extends Canvas{
                 }
             }
             //for testing
-            System.out.println(tag+": "+score);
+            System.out.println(item.tag+": "+score);
         }
         
     }

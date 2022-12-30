@@ -30,6 +30,6 @@ abstract class GameObject {
     
     protected abstract void __Init__();
     public abstract void Update(Graphics graphic);
-    
+    public abstract void OnDestroy(boolean isDestroyed);
     
 }

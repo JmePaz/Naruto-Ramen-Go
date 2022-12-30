@@ -100,4 +100,9 @@ class Player extends GameObject{
     public Image GetPlayerImg(){
         return playerImg;
     }
+
+    @Override
+    public void OnDestroy(boolean isDestroyed) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

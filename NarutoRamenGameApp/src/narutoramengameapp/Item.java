@@ -65,5 +65,14 @@ public class Item extends GameObject{
     }
 
     
-   
+   public String GetTag(){
+       return this.tag;
+   }
+
+    @Override
+    public void OnDestroy(boolean isDestroyed) {
+        this.isDestoryed = true;
+        this.itemIcon = null;
+        this.itemImg = null;
+    }
 }
