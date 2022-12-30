@@ -53,7 +53,7 @@ public class GameCanvas extends Canvas{
             }//end run
         };//end task 
         
-        timer.schedule(task, 500, 100);
+        timer.schedule(task, 100, 100);
     }
 
     @Override
