@@ -60,7 +60,7 @@ public class Item extends GameObject{
         else{
             //remove this
             //parent.itemGen.removeAndRegen(parent, this);
-            this.isDestoryed = true;
+            this.OnDestroy(true);
         }
     }
 

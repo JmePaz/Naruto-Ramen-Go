@@ -30,6 +30,9 @@ class Player extends GameObject{
     int gameAction;
     boolean isMoving;
     
+    int lives;
+    int score;
+    
     public Player(GameCanvas parent){
         super(parent);
         this.__Init__();
@@ -48,6 +51,7 @@ class Player extends GameObject{
         this.playerIcon =  playerSprites.get(0);
         this.playerImg = this.playerIcon.getImage();
         
+        this.lives = 3;
         this.stepDist = 7;
         this.isMoving = false;
         this.gameAction = 0;
@@ -104,5 +108,51 @@ class Player extends GameObject{
     @Override
     public void OnDestroy(boolean isDestroyed) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public void Collide(Item item){
+        
+        if(item.isDestoryed){
+            return;
+        }
+        //rectangles to detect collision
+        
+        //rectangle for player
+        Rectangle rectP=new Rectangle(this.posX,this.posY, this.playerImg.getHeight(null),this.playerImg.getHeight(null));
+       
+        //rectangle for items
+        Rectangle rectI=new Rectangle(item.posX, item.posY,item.itemImg.getWidth(null), item.itemImg.getHeight(null));
+       
+        if (rectP.intersects(rectI)){ 
+            //destroy item once collision occurs
+            item.OnDestroy(true);
+            
+            if (lives<=0){
+              lives=0;
+              System.out.println("RIP");
+            }
+            else{
+                //scores vary depending on item
+                //except in kunai, where player will lose 1 life
+                switch(item.tag){
+                    case "egg" -> {
+                        score+=5;
+                    }
+                    case "pork" -> {
+                        score+=10;
+                    }
+                    case "maki" -> {
+                        score+=15;
+                    }
+                    case "kunai" -> {
+                        lives-=1;
+                    }
+                    default -> {
+                    }
+                }
+            }
+            //for testing
+            System.out.println(item.tag+": "+score);
+        }
     }
 }
