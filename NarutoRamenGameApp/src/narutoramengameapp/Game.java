@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
  */
 public class Game  extends JFrame{
     GameCanvas gameCanvas;
+    GameOverScene gameOver;
     
     public Game(int width, int height){
         // initalize container
@@ -23,7 +24,9 @@ public class Game  extends JFrame{
         //set up game canvas
         gameCanvas = new GameCanvas(width, height);
         gameCanvas.setBounds(0, 0, width, height);
-        Pane.add(gameCanvas);
+        gameOver =  new GameOverScene(15, width, height);
+        gameOver.setBounds(0, 0, width, height);
+        Pane.add(gameOver);
         
         //set window Event
         WindowEvents();
