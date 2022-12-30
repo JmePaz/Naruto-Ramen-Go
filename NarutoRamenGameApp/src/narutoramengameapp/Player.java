@@ -147,8 +147,7 @@ class Player extends GameObject{
                     }
                 }
             }
-            //for testing
-            System.out.println(item.tag+": "+getScore());
+ 
         }
     }
     

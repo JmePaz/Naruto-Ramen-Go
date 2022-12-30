@@ -137,7 +137,6 @@ public class GameCanvas extends Canvas{
     int score_limit = 50;
     private void UpdatePace(){
         if(player.getScore()>score_limit){
-            System.out.println("Change pace at score: "+player.getScore());
             //for item speed
             Item.stepDist += 2;
             // for item gap
