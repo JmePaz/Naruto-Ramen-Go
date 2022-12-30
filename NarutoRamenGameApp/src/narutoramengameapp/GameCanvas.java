@@ -26,20 +26,15 @@ public class GameCanvas extends Canvas{
     public int virtualY = 40;
     
     Player player;
-    List<GameObject> items;
+    List<Item> items;
     ItemGenerator itemGen;
     
-    ImageIcon itemIcon;
-    Item itemGame;
-    
-    //added score and lives
-    public int score=0;
-    public int lives=3;
     
     public GameCanvas(int width, int height){
         //initalize canvasHeight
         canvasHeight = height;
         canvasWidth = width;
+        setBounds(0, 0, width, height);
         setBackground(Color.CYAN);
         
         //initialize Game Objects
@@ -59,102 +54,98 @@ public class GameCanvas extends Canvas{
             }//end run
         };//end task 
         
-        timer.schedule(task, 500, 100);
+        timer.schedule(task, 100, 100);
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         
-        //display this once game over
-        if (lives<=0){
-           
+        if(player.getLives()<=0){
+            Container parent = this.getParent();
+            parent.removeAll();
+            GameOverScene gameOverScene = new GameOverScene(player.getScore(), this.canvasWidth, this.canvasHeight);
+            parent.add(gameOverScene);
+            return;
+        }
+
+
+        //update Game Objects//
+        
+        //player update  
+        player.Update(g);
+        //item update
+        for(int i=0; i<items.size(); i++){
+            Item item = items.get(i);
+            //get icon and tag/name of respective item
+            String tag =  item.GetTag();
+
+            item.Update(g);
+            FlushItem(item, i);
+    
+            //player on collision with the item
+            player.Collide(item);
+            FlushItem(item, i);
+            UpdatePace();
+        }       
+        
+        //update UI
+        UIindicator(g);
+        
+        
+    }
+    
+    // destroy flushed items
+    private void FlushItem(Item item, int index){
+        if(item.isDestoryed){
+            //replace that item
+            items.set(index, itemGen.GenerateSingleItem(this));
+
+        }
+    }
+    
+    // ui for score and lives
+    private void UIindicator(Graphics g){
+        g.setColor(Color.darkGray);
+        g.fillRect(0, 0,this.getWidth(), 30);
+        
+        g.setColor(Color.white);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Lives: "+player.getLives(), 10, getHeight()/25);
+
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Score: "+player.getScore(), getWidth() - 100 - 40, getHeight()/25);
+    
+    }
+    
+    
+    private void InitatiateGameOver(Graphics g){
            //background
            Rectangle rectGO=new Rectangle(0,0,getWidth(),getHeight());
-           g.setColor(Color.red);
+           g.setColor(Color.black);
            g.fillRect(rectGO.x, rectGO.y, rectGO.width, rectGO.height);
            
            //game over message
            g.setFont(new Font("Arial", Font.BOLD,48));
+           g.setColor(Color.red);
            g.drawString("GAME OVER", getWidth()/10+5, getHeight()/2);
-        }
-        else{
-            g.setFont(new Font("Arial", Font.BOLD, 16));
-            g.drawString("Lives: "+lives, getWidth()/25, getHeight()/25);
-
-            g.setFont(new Font("Arial", Font.BOLD, 16));
-            g.drawString("Score: "+score, getWidth()-150, getHeight()/25);
-            
-            //update Game Objects//
-            
-            //player update  
-            player.Update(g);
-            //item update
-            for(int i=0; i<items.size(); i++){
-                GameObject item = items.get(i);
-
-                //get icon and tag/name of respective item
-                itemIcon=itemGen.selectedItemIcon;
-                String tag=itemGen.colItem;
-
-                item.Update(g);
-                if(item.isDestoryed){
-                    //replace that item
-                    items.set(i, itemGen.GenerateSingleItem(this));
-                    itemGame = new Item(this,itemIcon,tag,item.posX,item.posY);
-                }
-
-                //parameters to read item's current position
-                Collide(g,item.posX,item.posY,itemIcon.getImage(),tag);
-            }
-        }
     }
     
-    public void Collide(Graphics g,int x, int y, Image img, String tag)    {  
-        
-        //rectangles to detect collision
-        
-        //rectangle for player
-        Rectangle rectP=new Rectangle(player.posX,player.posY,player.playerImg.getWidth(this),player.playerImg.getHeight(this));
-       
-        //rectangle for items
-        Rectangle rectI=new Rectangle(x,y,img.getWidth(this),img.getHeight(this));
-       
-        if (rectP.intersects(rectI)){ 
-            //destroy item once collision occurs
-            items=null;
-            items =  itemGen.GenerateItems(this);
+    //add difficulty on the Game 
+    // add item step dist every score gap
+    static int SCORE_GAP = 50;
+    int score_limit = 50;
+    private void UpdatePace(){
+        if(player.getScore()>score_limit){
+            //for item speed
+            Item.stepDist += 2;
+            // for item gap
+            ItemGenerator.randYLimit = Math.min(15, ItemGenerator.randYLimit-8);
             
-            if (lives<=0){
-              lives=0;
-              System.out.println("RIP");
-            }
-            else{
-                //scores vary depending on item
-                //except in kunai, where player will lose 1 life
-                switch(tag){
-                    case "egg" -> {
-                        lives-=0;
-                        score+=5;
-                    }
-                    case "pork" -> {
-                        lives-=0;
-                        score+=10;
-                    }
-                    case "maki" -> {
-                        lives-=0;
-                        score+=15;
-                    }
-                    case "kunai" -> {
-                        lives-=1;
-                    }
-                    default -> {
-                    }
-                }
-            }
-            //for testing
-            System.out.println(tag+": "+score);
+            //score limit update (for next counter)
+            score_limit += SCORE_GAP;
         }
+        
         
     }
 }

@@ -18,8 +18,9 @@ public class ItemGenerator {
     Random random;
     int Nlimit, randX, randY;
     String[]itemProps;
-    List<GameObject> items;
+    List<Item> items;
     GameObject lastItem;
+    static int randYLimit = 70;
     
     String colItem;//tentative; to detect intersected item
     ImageIcon selectedItemIcon;
@@ -31,7 +32,7 @@ public class ItemGenerator {
         itemProps = new String[] {"egg", "maki", "pork"};
     }
     
-    public List<GameObject> GenerateItems(GameCanvas parent){
+    public List<Item> GenerateItems(GameCanvas parent){
         items = new ArrayList<>();
         randY = 0;
         for(int i=0; i<Nlimit; i++){
@@ -39,8 +40,8 @@ public class ItemGenerator {
             selectedItemIcon = imgIcon(selectedItem);
             
             randX = random.nextInt(parent.canvasWidth-(int)(parent.canvasWidth*0.14));
-            randY -= random.nextInt(50) + 70;
-            GameObject item = new Item(parent,selectedItemIcon, selectedItem, randX, randY );
+            randY -= random.nextInt(50) + ItemGenerator.randYLimit;
+            Item item = new Item(parent,selectedItemIcon, selectedItem, randX, randY );
             lastItem = item;
             colItem=selectedItem;//tentative; to detect intersected item
             items.add(item);
@@ -63,11 +64,11 @@ public class ItemGenerator {
     }
     
     //remove an index and generate another object
-    public GameObject GenerateSingleItem(GameCanvas parent){
+    public Item GenerateSingleItem(GameCanvas parent){
           //generate items
           //initializing positions
           randX = random.nextInt(parent.canvasWidth-(int)(parent.canvasWidth*0.14));
-          randY = random.nextInt(50) + 70;
+          randY = random.nextInt(50) + ItemGenerator.randYLimit;
           if(lastItem != null && !lastItem.isDestoryed){
               randY = lastItem.posY - randY;
           }
@@ -77,7 +78,7 @@ public class ItemGenerator {
           //generating item
           String selectedItem =  SelectItem();
           selectedItemIcon = new ImageIcon("src//Assets//Items//"+selectedItem+".png");
-          GameObject item = new Item(parent,selectedItemIcon, selectedItem, randX, randY );
+          Item item = new Item(parent,selectedItemIcon, selectedItem, randX, randY );
           lastItem = item;
           //returning item
           
