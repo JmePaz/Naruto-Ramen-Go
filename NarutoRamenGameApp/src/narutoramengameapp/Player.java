@@ -138,7 +138,7 @@ class Player extends GameObject{
                         score+=10;
                     }
                     case "maki" -> {
-                        score+=15;
+                        score+=20;
                     }
                     case "kunai" -> {
                         lives-=1;
