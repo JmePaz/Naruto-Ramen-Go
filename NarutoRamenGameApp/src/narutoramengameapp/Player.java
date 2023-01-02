@@ -35,8 +35,6 @@ class Player extends GameObject{
     public Player(GameCanvas parent){
         super(parent);
         this.__Init__();
-        
-        
     }
     
     public Player(GameCanvas parent, int X, int Y){
@@ -77,13 +75,11 @@ class Player extends GameObject{
                posX = Math.max(posX-stepDist, 0);
                frameSprite = (frameSprite+1)%4;
                this.img = playerSprites.get(frameSprite+0).getImage();
-               
             }
             else if(gameAction == KeyEvent.VK_RIGHT || gameAction == KeyEvent.VK_D){
                posX = Math.min(posX+stepDist, parent.canvasWidth-(int)(0.14f*parent.canvasWidth));
                frameSprite = (frameSprite+1)%4;
                this.img = playerSprites.get(frameSprite+4).getImage();
-               
             }
         }
         graphic.drawImage(this.img, posX, posY, parent);
@@ -97,10 +93,8 @@ class Player extends GameObject{
                 playerSprites.add(icon);
             }//loop frame to create all images in array form
         }
-    
     }
     
-
     @Override
     public void OnDestroy(boolean isDestroyed) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -125,7 +119,6 @@ class Player extends GameObject{
             
             if (getLives()<=0){
               lives=0;
-              System.out.println("RIP");
             }
             else{
                 //scores vary depending on item
@@ -147,7 +140,6 @@ class Player extends GameObject{
                     }
                 }
             }
- 
         }
     }
     
@@ -164,5 +156,4 @@ class Player extends GameObject{
     public int getScore() {
         return score;
     }
-
 }

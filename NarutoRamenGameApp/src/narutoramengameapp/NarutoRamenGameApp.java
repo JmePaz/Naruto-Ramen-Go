@@ -15,8 +15,6 @@ public class NarutoRamenGameApp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("Eah Maala and James Paz");
-        
         Game game = new Game(400, 550);
         game.Show();
     }
