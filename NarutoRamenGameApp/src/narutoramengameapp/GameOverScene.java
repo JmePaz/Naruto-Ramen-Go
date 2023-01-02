@@ -58,7 +58,7 @@ public class GameOverScene extends JPanel{
         this.add(replayBtn);
         
         homeBtn = new JButton("Go Home");
-        homeBtn.setBounds(getWidth()/3, getHeight()/3+replayBtn.getHeight()+20, 100, 30);
+        homeBtn.setBounds(getWidth()/3, getHeight()/3+40+20, 100, 30);
         homeBtn.addActionListener(e->goToIntro());
         this.add(homeBtn);
     }
