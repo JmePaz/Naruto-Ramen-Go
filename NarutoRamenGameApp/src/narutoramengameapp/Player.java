@@ -108,7 +108,7 @@ class Player extends GameObject{
         //rectangles to detect collision
         
         //rectangle for player
-        Rectangle rectP=new Rectangle(this.posX+10,this.posY, this.img.getWidth(null)-20,this.img.getHeight(null)-10);
+        Rectangle rectP=new Rectangle(this.posX+10,this.posY, this.img.getWidth(null)-20, this.img.getHeight(null)-10);
        
         //rectangle for items
         Rectangle rectI=new Rectangle(item.posX, item.posY, item.img.getWidth(null)-10, item.img.getHeight(null)-10);
