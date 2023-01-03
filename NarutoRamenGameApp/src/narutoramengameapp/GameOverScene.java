@@ -29,36 +29,36 @@ public class GameOverScene extends JPanel{
     public GameOverScene(int playerScore, int width, int height){
         this.setBounds(0, 0, width, height);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(Color.darkGray);
+        setBackground(Color.WHITE);
         this.playerScore = playerScore;
         __Init__();
        
     }
     
     private void __Init__(){
+        //styling for game over scene
+        GameStyle gameOverStyle = new GameStyle();
+        
+        //"GAME OVER" written
         JLabel label = new JLabel("GAME OVER");
-        label.setBounds(getWidth()/5, getHeight()/10, 250, 40);
-        label.setFont(new Font("Arial", Font.CENTER_BASELINE, 38));
-        label.setForeground(Color.red);
-        label.setAlignmentX(CENTER_ALIGNMENT);
+        gameOverStyle.labelStyle(label, gameOverStyle.red, 40, getWidth()/5, getHeight()/10, 350, 40);
         this.add(label);
        
-        
-        JLabel label2 = new JLabel("Score: "+ playerScore);
-        label2.setBounds(getWidth()/3, getHeight()/7, 250, 80);
-        label2.setFont(new Font("Arial", Font.CENTER_BASELINE, 28));
-        label2.setForeground(Color.white);
-        label2.setAlignmentX(CENTER_ALIGNMENT);
+        //display obtained points
+        JLabel label2 = new JLabel("You got "+ playerScore + " points!");
+        gameOverStyle.labelStyle(label2, Color.BLACK, 25, getWidth()/5, getHeight()/7, 350, 80);
         this.add(label2);
         
+        //button to play again
         JButton replayBtn = new JButton("Play Again");
-        replayBtn.setBounds(getWidth()/3, getHeight()/3, 100, 30);
+        gameOverStyle.buttonStyle(replayBtn, gameOverStyle.green, Color.WHITE,getWidth()/4, getHeight()/3, 200, 50);
         replayBtn.addActionListener(e->goToGame());
-        
         this.add(replayBtn);
         
+        //button to go back to home/intro scene
         homeBtn = new JButton("Go Home");
-        homeBtn.setBounds(getWidth()/3, getHeight()/3+40+20, 100, 30);
+
+        gameOverStyle.buttonStyle(homeBtn, gameOverStyle.red, Color.WHITE,getWidth()/4, getHeight()/3+replayBtn.getHeight()+20, 200, 50);
         homeBtn.addActionListener(e->goToIntro());
         this.add(homeBtn);
     }
@@ -78,8 +78,8 @@ public class GameOverScene extends JPanel{
     private void goToIntro(){
         Container parent = this.getParent();
         parent.remove(0);
-        homeBtn.revalidate();
         parent.add(new IntroScene(getWidth(), getHeight()));
+        homeBtn.revalidate();
         parent.revalidate();
      
     }

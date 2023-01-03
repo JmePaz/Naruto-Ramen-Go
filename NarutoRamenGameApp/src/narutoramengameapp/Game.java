@@ -20,6 +20,7 @@ public class Game  extends JFrame{
         Container Pane;
         Pane = getContentPane();
         Pane.setLayout(null);
+        Pane.setBackground(Color.WHITE);
         
         //set up game canvas
         gameCanvas = new GameCanvas(width, height);

@@ -22,7 +22,6 @@ public class ItemGenerator {
     GameObject lastItem;
     static int randYLimit = 70;
     
-    String colItem;//tentative; to detect intersected item
     ImageIcon selectedItemIcon;
     
     public ItemGenerator(int Nlimit){
@@ -43,7 +42,6 @@ public class ItemGenerator {
             randY -= random.nextInt(50) + ItemGenerator.randYLimit;
             Item item = new Item(parent,selectedItemIcon, selectedItem, randX, randY );
             lastItem = item;
-            colItem=selectedItem;//tentative; to detect intersected item
             items.add(item);
         }
         return items;

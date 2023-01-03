@@ -16,7 +16,6 @@ import java.util.List;
  * @author James RyzenX
  */
 public class GameCanvas extends Canvas{
-
     int canvasHeight;
     int canvasWidth;
     Timer timer;
@@ -35,22 +34,18 @@ public class GameCanvas extends Canvas{
         canvasHeight = height;
         canvasWidth = width;
         setBounds(0, 0, width, height);
-        setBackground(Color.CYAN);
         
         //initialize Game Objects
         itemGen = new ItemGenerator(20);
-        //REMOVE MUNA//gameObj= new Player(this, canvasWidth/2, canvasHeight-100);
-        player= new Player(this, canvasWidth/2, canvasHeight-100);
+        player= new Player(this, canvasWidth/2, canvasHeight-125);
         items =  itemGen.GenerateItems(this);
         
         //initialize a looping stage
-        
         timer = new Timer(true);
         task = new TimerTask() {
             @Override
             public void run() {
                 repaint();
-               
             }//end run
         };//end task 
         
@@ -61,11 +56,15 @@ public class GameCanvas extends Canvas{
     public void paint(Graphics g) {
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         
+        //place background art in canvas
+        Image bg = Toolkit.getDefaultToolkit().getImage("src//Assets//Others//background.png");
+        g.drawImage(bg, 0, 0, null);
+        
+        //end game once player loses all three lives
         if(player.getLives()<=0){
             InitatiateGameOver(g);
             return;
         }
-
 
         //update Game Objects//
         
@@ -88,33 +87,25 @@ public class GameCanvas extends Canvas{
         
         //update UI
         UIindicator(g);
-        
-        
     }
     
-    // destroy flushed items
+    //destroy flushed items
     private void FlushItem(Item item, int index){
         if(item.isDestoryed){
             //replace that item
             items.set(index, itemGen.GenerateSingleItem(this));
-
         }
     }
     
-    // ui for score and lives
+    //display score and lives
     private void UIindicator(Graphics g){
-        g.setColor(Color.darkGray);
-        g.fillRect(0, 0,this.getWidth(), 30);
-        
         g.setColor(Color.white);
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Lives: "+player.getLives(), 10, getHeight()/25);
+        g.setFont(new Font("Arial", Font.BOLD, 32));
+        g.drawString("Lives: "+player.getLives(), 10, getHeight()/15);
 
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Score: "+player.getScore(), getWidth() - 100 - 40, getHeight()/25);
-    
+        g.setFont(new Font("Arial", Font.BOLD, 32));
+        g.drawString("Score: "+player.getScore(), getWidth() - 195, getHeight()/15);
     }
-    
     
     private void InitatiateGameOver(Graphics g){
             //back to orig state
@@ -130,7 +121,7 @@ public class GameCanvas extends Canvas{
     }
     
     //add difficulty on the Game 
-    // add item step dist every score gap
+    //add item step dist every score gap
     static int SCORE_GAP = 50;
     int score_limit = 50;
     private void UpdatePace(){
@@ -143,7 +134,5 @@ public class GameCanvas extends Canvas{
             //score limit update (for next counter)
             score_limit += SCORE_GAP;
         }
-        
-        
     }
 }

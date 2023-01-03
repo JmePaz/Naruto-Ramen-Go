@@ -10,6 +10,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,25 +21,49 @@ import javax.swing.JPanel;
  */
 public class IntroScene extends JPanel{
     public IntroScene(int width, int height){
-        setBackground(Color.darkGray);
+        setBackground(Color.WHITE);
         setBounds(0, 0, width, height);
         __Init__();
         
     }
     
     private void __Init__(){
-        addSpace(200);
-        JLabel label = new JLabel("Naruto Ramen GO!");
-        label.setBounds(getWidth()/5, getHeight()/10, 250, 40);
-        label.setFont(new Font("Arial", Font.CENTER_BASELINE, 38));
-        label.setForeground(Color.white);
-        label.setAlignmentX(CENTER_ALIGNMENT);
-        this.add(label);
+        //place game logo
+        addSpace(85, 250);
+        JLabel logo = new JLabel();
+        logo.setIcon(new ImageIcon("src//Assets//Others//logo.png"));
+        logo.setBounds(0, getHeight()/10, 0, 50); 
+        this.add(logo);
         
-        addSpace(40);
+        //styling for intro scene
+        GameStyle introStyle=new GameStyle();
+        
+        //written game instructions
+        addSpace(100, 0);
+        JLabel instructions = new JLabel("HOW TO PLAY");
+        introStyle.labelStyle(instructions, Color.BLACK, 20, 0, getHeight()/30, 0, 50);
+        this.add(instructions);
+        
+        addSpace(0, 0);
+        JLabel instructions1 = new JLabel("1. Use left and right keys to move Naruto.");
+        introStyle.labelStyle(instructions1, Color.BLACK, 16, getWidth()/5, getHeight()/100, 350, 40);
+        this.add(instructions1);
+        
+        addSpace(0, 50);
+        JLabel instructions2 = new JLabel("2. Get egg, pork, and narutomaki for points.");
+        introStyle.labelStyle(instructions2, Color.BLACK, 16, getWidth()/5, getHeight()/100, 350, 40);
+        this.add(instructions2);
+        
+        addSpace(0, 0);
+        JLabel instructions3 = new JLabel("3. Avoid ninja knives/kunai to survive.");
+        introStyle.labelStyle(instructions3, Color.BLACK, 16, getWidth()/5, getHeight()/100, 350, 40);
+        instructions3.setAlignmentY(LEFT_ALIGNMENT);
+        this.add(instructions3);
+        
+        //button to start the game
+        addSpace(0, 50);
         JButton replayBtn = new JButton("Start Game");
-        replayBtn.setBounds(getWidth()/3, getHeight()/3, 100, 30);
-        replayBtn.setAlignmentX(CENTER_ALIGNMENT);
+        introStyle.buttonStyle(replayBtn, introStyle.green, Color.WHITE, getWidth()/3, getHeight()/3, 100, 50);
         replayBtn.addActionListener(e->goToGame());  
         this.add(replayBtn);
     }
@@ -51,7 +76,9 @@ public class IntroScene extends JPanel{
         parent.add(new GameCanvas(getWidth(), getHeight()));
     }
     
-     private void addSpace(int spaceY){
-        this.add(Box.createRigidArea(new Dimension(0, spaceY)));
+    private void addSpace(int spaceX, int spaceY){
+        this.add(Box.createRigidArea(new Dimension(spaceX, spaceY)));
     }
+     
+     
 }
