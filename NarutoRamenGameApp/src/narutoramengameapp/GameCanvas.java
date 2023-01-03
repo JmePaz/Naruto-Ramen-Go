@@ -28,6 +28,7 @@ public class GameCanvas extends Canvas{
     List<Item> items;
     ItemGenerator itemGen;
     
+    Image bg;
     
     public GameCanvas(int width, int height){
         //initalize canvasHeight
@@ -39,6 +40,9 @@ public class GameCanvas extends Canvas{
         itemGen = new ItemGenerator(20);
         player= new Player(this, canvasWidth/2, canvasHeight-125);
         items =  itemGen.GenerateItems(this);
+        
+        // for bg
+        bg = Toolkit.getDefaultToolkit().getImage("src//Assets//Others//background.png");
         
         //initialize a looping stage
         timer = new Timer(true);
@@ -57,7 +61,6 @@ public class GameCanvas extends Canvas{
         super.paint(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         
         //place background art in canvas
-        Image bg = Toolkit.getDefaultToolkit().getImage("src//Assets//Others//background.png");
         g.drawImage(bg, 0, 0, null);
         
         //end game once player loses all three lives
@@ -99,12 +102,15 @@ public class GameCanvas extends Canvas{
     
     //display score and lives
     private void UIindicator(Graphics g){
+        
+        g.fillRect(0, 0, getWidth(), 35);
+        
         g.setColor(Color.white);
-        g.setFont(new Font("Arial", Font.BOLD, 32));
-        g.drawString("Lives: "+player.getLives(), 10, getHeight()/15);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+        g.drawString("Lives: "+player.getLives(), 10, 25);
 
-        g.setFont(new Font("Arial", Font.BOLD, 32));
-        g.drawString("Score: "+player.getScore(), getWidth() - 195, getHeight()/15);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+        g.drawString("Score: "+player.getScore(), getWidth() - 140, 25);
     }
     
     private void InitatiateGameOver(Graphics g){
