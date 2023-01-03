@@ -57,6 +57,7 @@ public class GameOverScene extends JPanel{
         
         //button to go back to home/intro scene
         homeBtn = new JButton("Go Home");
+
         gameOverStyle.buttonStyle(homeBtn, gameOverStyle.red, Color.WHITE,getWidth()/4, getHeight()/3+replayBtn.getHeight()+20, 200, 50);
         homeBtn.addActionListener(e->goToIntro());
         this.add(homeBtn);
