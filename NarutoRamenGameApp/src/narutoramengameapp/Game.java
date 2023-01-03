@@ -32,7 +32,7 @@ public class Game  extends JFrame{
         WindowEvents();
  
         //set properties
-        setTitle("Naruto Ramen Go");
+        setTitle("Naruto Ramen Go [by Maala and Paz]");
         setSize(width, height);
         setResizable(false);
     }

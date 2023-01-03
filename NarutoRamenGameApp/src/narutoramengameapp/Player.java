@@ -97,7 +97,7 @@ class Player extends GameObject{
     
     @Override
     public void OnDestroy(boolean isDestroyed) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
     
     public void Collide(Item item){
@@ -108,10 +108,10 @@ class Player extends GameObject{
         //rectangles to detect collision
         
         //rectangle for player
-        Rectangle rectP=new Rectangle(this.posX,this.posY, this.img.getHeight(null),this.img.getHeight(null));
+        Rectangle rectP=new Rectangle(this.posX+10,this.posY, this.img.getWidth(null)-20,this.img.getHeight(null)-10);
        
         //rectangle for items
-        Rectangle rectI=new Rectangle(item.posX, item.posY,item.img.getWidth(null), item.img.getHeight(null));
+        Rectangle rectI=new Rectangle(item.posX, item.posY,item.img.getWidth(null)-10, item.img.getHeight(null)-10);
        
         if (rectP.intersects(rectI)){ 
             //destroy item once collision occurs
